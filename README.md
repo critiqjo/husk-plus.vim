@@ -1,4 +1,6 @@
-# husk.vim
+# husk-plus.vim
+
+**NOTE**: This document is not up to date with the current implementation.
 
 Mappings that boost vim command line mode.
 
@@ -43,14 +45,11 @@ All mappings work **only** in vim command line mode.
 
 ### Installation
 
-* Vundle<br/>
-`Plugin 'vim-utils/vim-husk'`
+* [vim-plug](https://github.com/junegunn/vim-plug)<br/>
+`Plug 'critiqjo/husk-plus.vim'`
 
-* vim-plug<br/>
-`Plug 'vim-utils/vim-husk'`
-
-* Pathogen<br/>
-`git clone git://github.com/vim-utils/vim-husk.git ~/.vim/bundle/vim-husk`
+* [Vundle](https://github.com/gmarik/Vundle.vim)<br/>
+`Plugin 'critiqjo/husk-plus.vim'`
 
 *Note*: In order to enable alt mappings (`M-f`, `M-b` etc) Mac OS users using
 Terminal.app may need to go to Preferences > Profiles > Keyboard and tick

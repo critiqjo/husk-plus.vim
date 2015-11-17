@@ -1,9 +1,11 @@
 *husk.txt*	Mappings that boost vim command line mode.
 
-Author: Bruno Sutic <https://www.github.com/bruno->
+Authors: Bruno Sutic <https://www.github.com/bruno->
+         John C F <https://www.github.com/critiqjo>
 
 INTRODUCTION					*husk*
 
+Note: This documentation is outdated.
 Mappings that boost vim command line mode. The goal is to have mappings
 similar to bash emacs mode. You can read more about this idea in |tcsh-style|.
 
@@ -63,7 +65,7 @@ CONTRIBUTING					*husk-contributing*
 
 Contributing is welcome. Github repo:
 
-  https://github.com/vim-utils/vim-husk
+  https://github.com/critiqjo/husk-plus.vim
 
 CHANGELOG					*husk-changelog*
 
@@ -80,6 +82,6 @@ v0.0.1: Aug 22, 2014		* Initial working version
 
 LICENSE						*husk-license*
 
-Copyright (c) Bruno Sutic. Distributed under the MIT license.
+Copyright (c) John C F. Distributed under the MIT license.
 
  vim:tw=78:ts=8:ft=help:norl:
