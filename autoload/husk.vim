@@ -1,13 +1,17 @@
 function! s:match_right(pat)
   let line = getcmdline()
   let pos = getcmdpos()
-  return match(line, a:pat, pos, 1) + 1
+  let next = match(line, a:pat, pos - 1, 1) + 1
+  if next == pos
+    let next = match(line, a:pat, pos - 1, 2) + 1
+  endif
+  return next
 endfun
 
 function! s:match_left(pat)
   let line = getcmdline()
   let pos = getcmdpos()
-  let i = 0
+  let i = 1
   let next = 1
   let nextnext = 1
   while nextnext < pos
@@ -55,5 +59,36 @@ function! husk#abstract_b_alt(command)
 endfun
 
 function! husk#kill_line_forw()
-  return getcmdpos()<2 ? "<C-e><C-u>" : "<C-\>egetcmdline()[0:getcmdpos()-2]<CR>"
+  return getcmdpos()<2 ? "\<C-e>\<C-u>" : "\<C-\>egetcmdline()[0:getcmdpos()-2]\<CR>"
+endfun
+
+function! husk#stack_push(item)
+  if !exists('s:undo_stack')
+    let s:undo_stack = []
+  endif
+  call add(s:undo_stack, a:item)
+endfun
+
+function! husk#stack_pop()
+  if !exists('s:undo_stack') || empty(s:undo_stack)
+    return
+  endif
+  let item = s:undo_stack[-1]
+  unlet s:undo_stack[-1]
+  call setcmdpos(item['pos'])
+  return item['txt']
+endfun
+
+function! husk#undo()
+  return "\<C-\>ehusk#stack_pop()\<CR>"
+endfun
+
+function! husk#reverse_undo()
+  " TODO Undo direction gets reversed, i.e. all immediately following undos become redos!
+  return ""
+endfun
+
+function! husk#exe(expr)
+  call husk#stack_push({'txt': getcmdline(), 'pos': getcmdpos()})
+  exe 'return ' . a:expr
 endfun

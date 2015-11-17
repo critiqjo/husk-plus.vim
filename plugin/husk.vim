@@ -30,23 +30,23 @@ function! s:enable_husk()
   cnoremap <expr> <Plug>(husk)cursor-b-alt husk#abstract_b_alt("\<Left>")
   cnoremap <expr> <Plug>(husk)cursor-e-alt "\<S-Right>"
 
-  cnoremap <expr> <Plug>(husk)history-prefix-up "\<Up>"
-  cnoremap <expr> <Plug>(husk)history-prefix-down "\<Down>"
-  cnoremap <expr> <Plug>(husk)history-up "\<C-p>"
-  cnoremap <expr> <Plug>(husk)history-down "\<C-n>"
+  cnoremap <expr> <Plug>(husk)history-prefix-up husk#exe('"\<Up>"')
+  cnoremap <expr> <Plug>(husk)history-prefix-down husk#exe('"\<Down>"')
+  cnoremap <expr> <Plug>(husk)history-up husk#exe('"\<C-p>"')
+  cnoremap <expr> <Plug>(husk)history-down husk#exe('"\<C-n>"')
 
-  cnoremap <expr> <Plug>(husk)kill-line-forw husk#kill_line_forw()
-  cnoremap <expr> <Plug>(husk)kill-line-backw "\<C-u>"
-  cnoremap <expr> <Plug>(husk)kill-word-forw-std husk#abstract_w("\<Del>")
-  cnoremap <expr> <Plug>(husk)kill-word-backw-std husk#abstract_b("\<BS>")
-  cnoremap <expr> <Plug>(husk)kill-word-forw-alt husk#abstract_w_alt("\<Del>")
-  cnoremap <expr> <Plug>(husk)kill-word-backw-alt husk#abstract_b_alt("\<BS>")
+  cnoremap <expr> <Plug>(husk)kill-line-forw husk#exe('husk#kill_line_forw()')
+  cnoremap <expr> <Plug>(husk)kill-line-backw husk#exe('"\<C-u>"')
+  cnoremap <expr> <Plug>(husk)kill-word-forw-std husk#exe('husk#abstract_w("\<Del>")')
+  cnoremap <expr> <Plug>(husk)kill-word-backw-std husk#exe('husk#abstract_b("\<BS>")')
+  cnoremap <expr> <Plug>(husk)kill-word-forw-alt husk#exe('husk#abstract_w_alt("\<Del>")')
+  cnoremap <expr> <Plug>(husk)kill-word-backw-alt husk#exe('husk#abstract_b_alt("\<BS>")')
   cnoremap <expr> <Plug>(husk)kill-char-forw "\<Del>"
   cnoremap <expr> <Plug>(husk)kill-char-backw "\<BS>"
-  cnoremap <expr> <Plug>(husk)undo "\<NOP>"
+  cnoremap <expr> <Plug>(husk)undo husk#undo()
 
   cnoremap <Plug>(husk)leader <NOP>
-  cnoremap <expr> <Plug>(husk)leader<Plug>(husk)undo "\<NOP>"
+  cnoremap <expr> <Plug>(husk)leader<Plug>(husk)undo husk#reverse_undo()
 endfun
 
 function! s:bindkeys()
@@ -60,13 +60,15 @@ function! s:bindkeys()
     cmap <Esc>k <M-k>
     cmap <Esc>l <M-l>
     cmap <Esc>x <M-x>
+
+    cnoremap <nowait> <Esc> <C-c>
   endif
 
   if !get(g:, 'husk#disable_default_leader', 0)
     cmap <C-f> <Plug>(husk)leader
     cnoremap <C-f><C-f> <C-f>
   endif
-  cmap <C-/> <Plug>(husk)undo
+  cmap <C-_> <Plug>(husk)undo
 
   cmap <M-x> <Plug>(husk)kill-char-forw
   cmap <M-d> <Plug>(husk)kill-word-forw-std
