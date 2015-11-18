@@ -66,12 +66,18 @@ function! husk#stack_push(item)
   if !exists('s:undo_stack')
     let s:undo_stack = []
   endif
+  let cap = get(g:, 'husk#undo_stack_capacity', 64)
+  let cut = get(g:, 'husk#undo_stack_cut_by', 16)
+  if len(s:undo_stack) >= cap
+    let cut = cut<2 ? 0 : cut-1
+    unlet s:undo_stack[0:cut]
+  endif
   call add(s:undo_stack, a:item)
 endfun
 
 function! husk#stack_pop()
   if !exists('s:undo_stack') || empty(s:undo_stack)
-    return
+    return getcmdline()
   endif
   let item = s:undo_stack[-1]
   unlet s:undo_stack[-1]

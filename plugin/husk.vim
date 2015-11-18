@@ -32,8 +32,8 @@ function! s:enable_husk()
 
   cnoremap <expr> <Plug>(husk)history-prefix-up husk#exe('"\<Up>"')
   cnoremap <expr> <Plug>(husk)history-prefix-down husk#exe('"\<Down>"')
-  cnoremap <expr> <Plug>(husk)history-up husk#exe('"\<C-p>"')
-  cnoremap <expr> <Plug>(husk)history-down husk#exe('"\<C-n>"')
+  cnoremap <expr> <Plug>(husk)history-up husk#exe('wildmenumode() ? " \<BS>\<C-p>" : "\<C-p>"')
+  cnoremap <expr> <Plug>(husk)history-down husk#exe('wildmenumode() ? " \<BS>\<C-n>" : "\<C-n>"')
 
   cnoremap <expr> <Plug>(husk)kill-line-forw husk#exe('husk#kill_line_forw()')
   cnoremap <expr> <Plug>(husk)kill-line-backw husk#exe('"\<C-u>"')
@@ -54,6 +54,9 @@ function! s:bindkeys()
     cmap <Esc>w <M-w>
     cmap <Esc>b <M-b>
     cmap <Esc>e <M-e>
+    cmap <Esc>W <M-W>
+    cmap <Esc>B <M-B>
+    cmap <Esc>E <M-E>
     cmap <Esc>d <M-d>
     cmap <Esc>h <M-h>
     cmap <Esc>j <M-j>
@@ -83,6 +86,9 @@ function! s:bindkeys()
   cmap <M-w> <Plug>(husk)cursor-w-std
   cmap <M-b> <Plug>(husk)cursor-b-std
   cmap <M-e> <Plug>(husk)cursor-e-std
+  cmap <M-W> <Plug>(husk)cursor-w-alt
+  cmap <M-B> <Plug>(husk)cursor-b-alt
+  cmap <M-E> <Plug>(husk)cursor-e-alt
   cmap <M-h> <Plug>(husk)cursor-left
   cmap <M-l> <Plug>(husk)cursor-right
   cmap <M-j> <Plug>(husk)history-prefix-down
