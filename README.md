@@ -1,47 +1,6 @@
 # husk-plus.vim
 
-**NOTE**: This document is not up to date with the current implementation.
-
-Mappings that boost vim command line mode.
-
-The goal is to have mappings similar to `bash` emacs mode.
-You can read more about this idea in vim's docs
-[:h tcsh-style](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#tcsh-style).
-
-Plugin killer feature are convenient `M-f` and `M-b` CLI mappings that move one
-"word" right or left (notice the lowercase "word").
-
-This is an enhancement from vanilla vim that enables only "WORD" (uppercase)
-left or right with<br/>
-`<S-Left>` and `<S-Right>`.
-
-Works in NeoVim too.
-
-### Mappings
-
-All mappings work **only** in vim command line mode.
-
-- `C-a` go to the beginning of the line
-- `C-f` go one character right or fall back to
-  [c_CTRL-F](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-F)
-  at the end of the line
-- `C-b` go one character left
-- `C-d` delete character or fall back to
-  [c_CTRL-D](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-D)
-  at the end of the line
-- `C-k` clear line after the cursor, overrides
-  [c_CTRL-K](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-K)
-  (if you're using `C-k` for digraphs check the docs how to disable)
-- `C-x C-e` open the command-line window, same as
-  [c_CTRL-f](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-F)
-- `M-f` (Alt-f) go one "word" right
-- `M-b` (Alt-b) go one "word" left
-- `M-d` (Alt-d) delete "word" after the cursor
-- `M-BS` (Alt-Backspace) delete "word" before the cursor, same as
-  [c_CTRL-W](http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-W)
-- `M-#` (Alt-shift-3) insert comment at the beginning of the line and execute
-  it. Useful for discarding the line, but still keeping it in the command-line
-  history for later retrieval.
+Mappings that boost vim command line mode with (basic) undo support.
 
 ### Installation
 
@@ -55,18 +14,70 @@ All mappings work **only** in vim command line mode.
 Terminal.app may need to go to Preferences > Profiles > Keyboard and tick
 "Use Option as Meta key".
 
+### Mappings
+
+All mappings work **only** in Vim command line mode. Below, "undoable" marks
+those commands whose state before execution is pushed to the undo stack.
+
+| Mapping                           | Description                | Default binding      | Undoable |
+|-----------------------------------|----------------------------|----------------------|----------|
+| `<Plug>(husk)cursor-home`         | wraps `<Home>`             | `<C-a>`              | no       |
+| `<Plug>(husk)cursor-end`          | wraps `<End>`              | `<C-e>`              | no       |
+| `<Plug>(husk)cursor-left`         | move cursor left           | `<M-h>`              | no       |
+| `<Plug>(husk)cursor-right`        | move cursor right          | `<M-l>`              | no       |
+| `<Plug>(husk)cursor-w-std`        | cursor w-jump              | `<M-w>`              | no       |
+| `<Plug>(husk)cursor-b-std`        | cursor b-jump              | `<M-b>`              | no       |
+| `<Plug>(husk)cursor-e-std`        | cursor e-jump              | `<M-e>`              | no       |
+| `<Plug>(husk)cursor-ge-std`       | cursor ge-jump             | none                 | no       |
+| `<Plug>(husk)cursor-w-alt`        | cursor W-jump              | `<M-W>`              | no       |
+| `<Plug>(husk)cursor-b-alt`        | cursor B-jump              | `<M-B>`              | no       |
+| `<Plug>(husk)cursor-e-alt`        | cursor E-jump              | `<M-E>`              | no       |
+| `<Plug>(husk)history-prefix-up`   | wraps `<Up>`               | `<M-k>`              | yes      |
+| `<Plug>(husk)history-prefix-down` | wraps `<Down>`             | `<M-j>`              | yes      |
+| `<Plug>(husk)history-up`          | wraps `<Space><BS><C-p>`   | none                 | yes      |
+| `<Plug>(husk)history-down`        | wraps `<Space><BS><C-n>`   | none                 | yes      |
+| `<Plug>(husk)kill-line-forw`      | clear line after cursor    | `<C-k>`\*            | yes      |
+| `<Plug>(husk)kill-line-backw`     | clear line backwards       | `<C-u>`              | yes      |
+| `<Plug>(husk)kill-word-forw-std`  | delete "word" after cursor | `<M-d>`              | yes      |
+| `<Plug>(husk)kill-word-backw-std` | delete "word" backwards    | `<C-w>`              | yes      |
+| `<Plug>(husk)kill-word-forw-alt`  | delete "WORD" after cursor | `<C-f><M-d>`\**      | yes      |
+| `<Plug>(husk)kill-word-backw-alt` | delete "WORD" backwards    | `<C-f><C-w>`\**      | yes      |
+| `<Plug>(husk)kill-char-forw`      | wraps `<Del>`              | `<M-x>`              | no       |
+| `<Plug>(husk)kill-char-backw`     | wraps `<BS>`               | none                 | no       |
+| `<Plug>(husk)undo`                | pops the undo stack        | `<C-_>`<sup>\#</sup> | no       |
+| `<Plug>(husk)leader`              | by itself, a `<NOP>`       | `<C-f>`\*            | NA       |
+
+\* `<C-f><C-k>`\** is mapped to the default `<C-k>` behaviour, and if default
+husk-leader mapping is not overridden, `<C-f><C-f>` gets mapped to the default
+`<C-f>` behaviour.
+
+\** `<C-f>` is due to the `<Plug>(husk)leader` mapping.
+
+<sup>\#</sup> `<C-/>` and `<C-_>` seems identical to vim
+(see [this SO answer](http://stackoverflow.com/a/9051932/2849934)).
+
+### Configuration
+
+| Global variable                   | Default | Description                         |
+|-----------------------------------|---------|-------------------------------------|
+| `g:husk#disable_default_leader`   | `0`     | Skip mapping husk leader to `<C-f>` |
+| `g:husk#disable_default_bindings` | `0`     | Skip all default mappings           |
+| `g:husk#undo_stack_capacity`      | `64`    | Undo stack max capacity             |
+| `g:husk#undo_stack_cut_by`        | `16`    | When undo stack exceeds its capacity, the oldest `cut_by` number of items is popped off |
+
+### Todo
+
+* Support for (emacs-like) redos
+
 ### About
 
-`vim-husk` grew out from Tim Pope's [vim-rsi](https://github.com/tpope/vim-rsi)
-plugin. `C-f`, `C-d` and `M-BS` mappings are directly copied.
+`husk-plus.vim` was inspired by [`vim-husk`](https://github.com/vim-utils/vim-husk) plugin.
 
-Differences:
+Differences from `vim-husk`:
 
-- `vim-husk` has proper `M-f`, `M-b` and `M-d`  mapping implementation
-- with `vim-husk` there's no risk of breaking vim's macros. Link to related
-  [vim-rsi issue](https://github.com/tpope/vim-rsi/issues/13).
-- `vim-rsi` has a broader scope and provides `insert` and `normal` mode
-  mappings while `vim-husk` focuses only on vim's CLI.
+- support for undoing
+- prefers "meta + [wWbBeE]" for word jumps
+- removed [vim-rsi](https://github.com/tpope/vim-rsi) mappings and behaviour
 
 ### Licence
 

@@ -5,7 +5,8 @@ Authors: Bruno Sutic <https://www.github.com/bruno->
 
 INTRODUCTION					*husk*
 
-Note: This documentation is outdated.
+Note: This documentation is outdated. See README.md file.
+
 Mappings that boost vim command line mode. The goal is to have mappings
 similar to bash emacs mode. You can read more about this idea in |tcsh-style|.
 
