@@ -1,88 +1,122 @@
-*husk.txt*	Mappings that boost vim command line mode.
+*husk.txt*	Features that boost your command line mode productivity.
 
 Authors: Bruno Sutic <https://www.github.com/bruno->
          John C F <https://www.github.com/critiqjo>
 
-INTRODUCTION					*husk*
+==============================================================================
+INTRODUCTION					*husk-plus*
 
-Note: This documentation is outdated. See README.md file.
+Husk-plus introduces mappings that boost command line mode productivity along
+with (basic) undo support.
 
-Mappings that boost vim command line mode. The goal is to have mappings
-similar to bash emacs mode. You can read more about this idea in |tcsh-style|.
-
-Plugin killer feature are <M-f> and <M-b> CLI mappings that move one "word"
-right or left (notice the lowercase "word"). This is an enhancement from
-vanilla vim that enables only "WORD" (uppercase) left or right with
-|c_<S-Left>| and |<S-Right>|.
-
-MAPS						*husk-maps*
+==============================================================================
+MAPPINGS					*husk-plus-mappings*
 
 All mappings are defined only in vim's command line mode.
+(undoable = the state prior to its execution is pushed to undo stack)
 
-						*husk-CTRL-A*
-<C-a>		Cursor to beginning of command line, same as |c_CTRL-B|.
+*<Plug>(husk)cursor-home*         	Wraps |c_<Home>|
+					Default binding: `<C-a>`
 
-						*husk-CTRL-F*
-<C-f>		Cursor right, same as |c_<Right>|. Falls back to
-		|c_CTRL-F| at the end of the line.
+*<Plug>(husk)cursor-end*          	Wraps |c_<End>|
+					Default binding: `<C-e>`
 
-						*husk-CTRL-B*
-<C-b>		Cursor left, same as |c_<Left>|.
+*<Plug>(husk)cursor-left*         	Wraps |c_<Left>|
+					Default binding: `<M-h>`
 
-						*husk-CTRL-D*
-<C-d>		Delete character after the cursor. Falls back to
-		|c_CTRL-D| at the end of the line.
+*<Plug>(husk)cursor-right*        	Wraps |c_<Right>|
+					Default binding: `<M-l>`
 
-						*husk-CTRL-K*
-<C-k>		Clear line after the cursor.
-		If you're using |c_CTRL-K| you can disable this mapping
-		with 'let g:husk_ctrl_k = 0'.
+*<Plug>(husk)cursor-w-std*        	Cursor w-jump
+					Default binding: `<M-w>`
 
-						*husk-CTRL-X_CTRL-E*
-<C-x><C-e>	Open the command-line window, same as |c_CTRL-f|.
+*<Plug>(husk)cursor-b-std*        	Cursor b-jump
+					Default binding: `<M-b>`
 
-						*husk-META-F*
-<M-f>		Cursor one "word" right. Command line equivalent of |w| for
-		normal mode.
+*<Plug>(husk)cursor-e-std*        	Cursor e-jump
+					Default binding: `<M-e>`
 
-						*husk-META-B*
-<M-b>		Cursor one "word" left. Command line equivalent of |b| for
-		normal mode.
+*<Plug>(husk)cursor-ge-std*       	Cursor ge-jump
+					No default binding
 
-						*husk-META-D*
-<M-d>		Delete "word" after the cursor. Command line equivalent of
-		'dw' for normal mode.
+*<Plug>(husk)cursor-w-alt*        	Cursor W-jump
+					Default binding: `<M-W>`
 
-						*husk-META-BS*
-<M-BS>		Delete "word" before the cursor. Same as |c_CTRL-W|.
+*<Plug>(husk)cursor-b-alt*        	Cursor B-jump
+					Default binding: `<M-B>`
 
-						*husk-META-#*
-<M-#>		Insert comment at the beginning and execute the line.
-		This is different than just discarding the line, because
-		commented line stays in the command-line history and can
-		later be retrieved.
+*<Plug>(husk)cursor-e-alt*        	Cursor E-jump
+					Default binding: `<M-E>`
 
-CONTRIBUTING					*husk-contributing*
+*<Plug>(husk)history-prefix-up*   	Wraps |c_<Up>| (undoable)
+					Default binding: `<M-k>`
 
-Contributing is welcome. Github repo:
+*<Plug>(husk)history-prefix-down* 	Wraps |c_<Down>| (undoable)
+					Default binding: `<M-j>`
+
+*<Plug>(husk)history-up*          	Wraps `<Space><BS>`|c_CTRL-P| (undoable)
+					No default binding
+
+*<Plug>(husk)history-down*        	Wraps `<Space><BS>`|c_CTRL-N| (undoable)
+					No default binding
+
+*<Plug>(husk)kill-line-forw*      	Clear line after cursor (undoable)
+					Default binding: `<C-k>`
+
+*<Plug>(husk)kill-line-backw*     	Clear line backwards (undoable)
+					Default binding: `<C-u>`
+
+*<Plug>(husk)kill-word-forw-std*  	Delete "word" after cursor (undoable)
+					Default binding: `<M-d>`
+
+*<Plug>(husk)kill-word-backw-std* 	Delete "word" backwards (undoable)
+					Default binding: `<C-w>`
+
+*<Plug>(husk)kill-word-forw-alt*  	Delete "WORD" after cursor (undoable)
+					Default binding: `<C-f><M-d>`
+
+*<Plug>(husk)kill-word-backw-alt* 	Delete "WORD" backwards (undoable)
+					Default binding: `<C-f><C-w>`
+
+*<Plug>(husk)kill-char-forw*      	Wraps |c_<Del>|
+					Default binding: `<M-x>`
+
+*<Plug>(husk)kill-char-backw*     	Wraps |c_<BS>|
+					No default binding
+
+*<Plug>(husk)undo*                	Pops the undo stack
+					Default binding: `<C-_>` (CTRL-/)
+
+*<Plug>(husk)leader*              	By itself, a |<NOP>|
+					Default binding: `<C-f>`
+
+==============================================================================
+GLOBALS 					*husk-plus-globals*
+
+*g:husk#disable_default_leader* = 0	Skip mapping husk leader to <C-f>
+*g:husk#disable_default_bindings* = 0	Skip all default mappings
+*g:husk#undo_stack_capacity* = 64	Undo stack max capacity
+*g:husk#undo_stack_cut_by* = 16		When undo stack overflows, the oldest
+					"cut_by" number of items is popped off
+
+==============================================================================
+CUSTOMIZING					*husk-plus-customize*
+>
+	let g:husk#disable_default_leader = 1
+	cmap <C-x> <Plug>(husk)leader
+	cmap <C-p> <Plug>(husk)history-up
+	cmap <C-n> <Plug>(husk)history-down
+<
+==============================================================================
+CONTRIBUTING					*husk-plus-contributing*
+
+Contributions in the form of bug reports and patches are welcome. Visit:
 
   https://github.com/critiqjo/husk-plus.vim
 
-CHANGELOG					*husk-changelog*
+==============================================================================
+LICENSE						*husk-plus-license*
 
-v0.6.1: Sep 30, 2015		* bugfix: when '&term' changes plugin stops
-				  working
-v0.6.0: Nov 26, 2014		* Add 'C-k' mapping
-v0.5.0: Nov 26, 2014		* Add 'M-#' and 'C-x C-e' mappings
-v0.4.0: Nov 24, 2014		* Autoload functions
-v0.3.0: Oct 08, 2014		* Add 'C-f` mapping
-v0.2.0: Oct 01, 2014		* Add 'M-BS' mapping
-v0.1.0: Sep 29, 2014		* Add 'M-d' mapping
-v0.0.2: Sep 29, 2014		* Add 'C-d' mapping
-v0.0.1: Aug 22, 2014		* Initial working version
-
-LICENSE						*husk-license*
-
-Copyright (c) John C F. Distributed under the MIT license.
+Copyright (c) John C F, Bruno Sutic. Distributed under the MIT license.
 
  vim:tw=78:ts=8:ft=help:norl:
