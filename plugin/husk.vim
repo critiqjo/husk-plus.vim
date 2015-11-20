@@ -64,7 +64,7 @@ function! s:bindkeys()
     cmap <Esc>l <M-l>
     cmap <Esc>x <M-x>
 
-    cnoremap <nowait> <Esc> <C-c>
+    cnoremap <nowait> <expr> <Esc> stridx(&cpo, 'x') < 0 ? "\<C-c>" : "\<Esc>"
   endif
 
   if !get(g:, 'husk#disable_default_leader', 0)
