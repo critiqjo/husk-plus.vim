@@ -1,14 +1,14 @@
-# husk-plus.vim
+# husk-x.vim
 
 Mappings that boost vim command line mode with (basic) undo support.
 
 ### Installation
 
 * [vim-plug](https://github.com/junegunn/vim-plug)<br/>
-`Plug 'critiqjo/husk-plus.vim'`
+`Plug 'critiqjo/husk-x.vim'`
 
 * [Vundle](https://github.com/gmarik/Vundle.vim)<br/>
-`Plugin 'critiqjo/husk-plus.vim'`
+`Plugin 'critiqjo/husk-x.vim'`
 
 *Note*: In order to enable alt mappings (`M-f`, `M-b` etc) Mac OS users using
 Terminal.app may need to go to Preferences > Profiles > Keyboard and tick
@@ -71,7 +71,7 @@ husk-leader mapping is not overridden, `<C-f><C-f>` gets mapped to the default
 
 ### About
 
-`husk-plus.vim` was inspired by [`vim-husk`](https://github.com/vim-utils/vim-husk) plugin.
+`husk-x.vim` was inspired by [`vim-husk`](https://github.com/vim-utils/vim-husk) plugin.
 
 Differences from `vim-husk`:
 

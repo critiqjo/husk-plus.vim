@@ -4,13 +4,13 @@ Authors: Bruno Sutic <https://www.github.com/bruno->
          John C F <https://www.github.com/critiqjo>
 
 ==============================================================================
-INTRODUCTION					*husk-plus*
+INTRODUCTION					*husk-x*
 
-Husk-plus introduces mappings that boost command line mode productivity along
+husk-x introduces mappings that boost command line mode productivity along
 with (basic) undo support.
 
 ==============================================================================
-MAPPINGS					*husk-plus-mappings*
+MAPPINGS					*husk-x-mappings*
 
 All mappings are defined only in vim's command line mode.
 (undoable = the state prior to its execution is pushed to undo stack)
@@ -91,7 +91,7 @@ All mappings are defined only in vim's command line mode.
 					Default binding: `<C-f>`
 
 ==============================================================================
-GLOBALS 					*husk-plus-globals*
+GLOBALS 					*husk-x-globals*
 
 *g:husk#disable_default_leader* = 0	Skip mapping husk leader to <C-f>
 *g:husk#disable_default_bindings* = 0	Skip all default mappings
@@ -100,7 +100,7 @@ GLOBALS 					*husk-plus-globals*
 					"cut_by" number of items is popped off
 
 ==============================================================================
-CUSTOMIZING					*husk-plus-customize*
+CUSTOMIZING					*husk-x-customize*
 >
 	let g:husk#disable_default_leader = 1
 	cmap <C-x> <Plug>(husk)leader
@@ -108,14 +108,14 @@ CUSTOMIZING					*husk-plus-customize*
 	cmap <C-n> <Plug>(husk)history-down
 <
 ==============================================================================
-CONTRIBUTING					*husk-plus-contributing*
+CONTRIBUTING					*husk-x-contributing*
 
 Contributions in the form of bug reports and patches are welcome. Visit:
 
-  https://github.com/critiqjo/husk-plus.vim
+  https://github.com/critiqjo/husk-x.vim
 
 ==============================================================================
-LICENSE						*husk-plus-license*
+LICENSE						*husk-x-license*
 
 Copyright (c) John C F, Bruno Sutic. Distributed under the MIT license.
 
