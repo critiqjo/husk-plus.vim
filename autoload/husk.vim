@@ -89,11 +89,6 @@ function! husk#undo()
   return "\<C-\>ehusk#stack_pop()\<CR>"
 endfun
 
-function! husk#reverse_undo()
-  " TODO Undo direction gets reversed, i.e. all immediately following undos become redos!
-  return ""
-endfun
-
 function! husk#exe(expr)
   call husk#stack_push({'txt': getcmdline(), 'pos': getcmdpos()})
   exe 'return ' . a:expr
